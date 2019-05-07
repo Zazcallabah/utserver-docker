@@ -1,0 +1,9 @@
+version: "3"
+services:
+  utserver:
+    image: utserver:latest
+    ports:
+      - 8080:8080
+      - 6666:6666
+    volumes:
+      - /mnt/molly/incoming:/mnt/incoming
