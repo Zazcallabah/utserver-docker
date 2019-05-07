@@ -1,12 +1,19 @@
-FROM juliohm/ubuntu:1.0
+FROM gcr.io/google-containers/ubuntu-slim:0.14
 
-RUN clean-install curl sudo
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN wget -O /tmp/ut.tgz "http://download-hr.utorrent.com/track/beta/endpoint/utserver/os/linux-x64-ubuntu-13-04" \
-    && tar -xzf /tmp/ut.tgz && rm -fr /tmp/ut.tgz \
-    && mv /utorrent-server-alpha-v3_3 /opt/utorrent
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl sudo wget ca-certificates util-linux software-properties-common
+
+ADD ./utserver.tar.gz /
+
+RUN mv /utorrent-server-alpha-v3_3 /opt/utorrent \
+  && rm -fr /var/lib/apt/lists/* \
+  && rm -fr /var/cache/apt/* \
+  && rm -fr /tmp/*
+
+RUN chmod +x /opt/utorrent/utserver
 
 COPY ./utserver.conf /opt/utorrent
-RUN chmod +x /opt/utorrent/utserver
 
 ENTRYPOINT ["/opt/utorrent/utserver" , "-settingspath" , "/opt/utorrent/" , "-configfile", "/opt/utorrent/utserver.conf"]

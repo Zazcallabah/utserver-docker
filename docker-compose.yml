@@ -2,6 +2,7 @@ version: "3"
 services:
   utserver:
     image: utserver:latest
+    build: ./
     ports:
       - 8080:8080
       - 6666:6666
