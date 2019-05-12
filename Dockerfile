@@ -10,7 +10,7 @@ RUN apt-get update \
 
 ADD ./utserver.tar.gz /
 
-RUN mv /utorrent-server-alpha-v3_3 /opt/utorrent\
+RUN mv /utorrent-server-alpha-v3_3 /opt/utorrent \
   && chmod +x /opt/utorrent/utserver
 
 COPY ./utserver.conf /opt/utorrent
