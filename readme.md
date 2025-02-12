@@ -1,4 +1,2 @@
-todo:
-* logging to somewhere
-* auto restart on host reboot
-* use env variables for password
+# utserver docker
+web ui for torrents, hosted in docker. originally utorrent, now qbittorent. use with chrometorrent for best effect.

@@ -1,10 +1,20 @@
 services:
-  utserver:
-    image: utserver:latest
-    build: ./
+  qbittorrent-nox:
+    container_name: qbittorrent-nox
+    environment:
+      - QBT_LEGAL_NOTICE=confirm
+      - QBT_VERSION=latest
+      - QBT_WEBUI_PORT=18081
+    image: qbittorrentofficial/qbittorrent-nox:latest
     ports:
-      - 8080:8080
-      - 6666:6666
+      - 6881:6881/tcp
+      - 6881:6881/udp
+      - 18081:18081/tcp
+    read_only: true
+    stop_grace_period: 30m
+    tmpfs:
+      - /tmp
+    tty: true
     volumes:
-      - ./incoming:/mnt/incoming
-      - ./server.conf:/root/.config/qBittorrent/qBittorrent.conf
+      - server.conf:/config/qBittorent/config/qBittorent.conf
+      - ./incoming:/downloads
